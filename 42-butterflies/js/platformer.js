@@ -86,7 +86,7 @@ function updateGame () {
 	// clear the canvas
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
-	if (!levelCleared) {
+	if (!levelCleared && levelCount <= 3) {
 		// update player and level info
 		player.update();
 		level.update();
@@ -96,10 +96,13 @@ function updateGame () {
 		level.render();
 		player.render();
 	}
+	else if (levelCount == 3){
+		//END GAME HERE
+	}
 	else {
 		// setup a message to display
 		context.fillStyle = '#8060B6';
-		context.font = '6em "Grand Hotel"';
+		context.font = '6em "Times New Roman"';
 		var message = 'Level ' + levelCount + ' cleared!';
 		context.fillText(message, (canvas.width - context.measureText(message).width)/2, canvas.height/2);
 		// display the message for 2 seconds before clearing it and starting a new level
