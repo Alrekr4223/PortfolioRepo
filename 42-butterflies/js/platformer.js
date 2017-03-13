@@ -86,7 +86,7 @@ function updateGame () {
 	// clear the canvas
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
-	if (!levelCleared && levelCount <= 3) {
+	if (!levelCleared && levelCount <= 3) { // 3 is arbitrary. Change to determine max levels
 		// update player and level info
 		player.update();
 		level.update();
@@ -96,8 +96,20 @@ function updateGame () {
 		level.render();
 		player.render();
 	}
-	else if (levelCount == 3){
-		//END GAME HERE
+	else if (levelCount < 3) { // 3 is arbitrary. Change to determine max levels
+
+	    // setup a End message
+	    context.fillStyle = '#8060B6';
+	    context.font = '6em "Times New Roman"';
+	    var message = 'Game Victory!';
+	    context.fillText(message, (canvas.width - context.measureText(message).width) / 2, canvas.height / 2);
+
+	    context.fillStyle = '#8060B6';
+	    context.font = '4em "Times New Roman"';
+	    var message = 'Restart';
+	    context.fillText(message, (canvas.width - context.measureText(message).width) / 2, canvas.height / 1.5);
+
+	    document.onclick = resetGame;
 	}
 	else {
 		// setup a message to display
@@ -117,6 +129,15 @@ function updateGame () {
 			}, 2000);
 		}
 	}
+}
+
+//Resets game back to level 1
+function resetGame() {
+    score = 0;
+    levelCleared = false;
+    levelCount = 0;
+    level.reset(level.maxScore + Math.ceil(level.maxScore / 2));
+    player.reset();
 }
 
 // collision detection
